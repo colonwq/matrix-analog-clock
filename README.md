@@ -19,3 +19,4 @@ References:
 - Adafruit Matrix Portal Library: https://docs.circuitpython.org/projects/matrixportal/en/latest/
 - Adafruit Shapes Library: https://docs.circuitpython.org/projects/display-shapes/en/latest/index.html
 
+![Screenshot](clock-image.jpg)
