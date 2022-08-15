@@ -41,6 +41,8 @@ centerX = centerY = radius = 0
 HOUR = 0
 MIN  = 0
 SEC  = 0
+HOURS_PASSED = 0
+network = None
 
 '''
 Get wifi details and more from a secrets.py file
@@ -136,7 +138,16 @@ def drawClock(display):
   global HOUR
   global MIN
   global SEC
+  global HOURS_PASSED
+  global network
   curr_time = time.localtime()
+
+  if curr_time.tm_hour != HOUR:
+      HOURS_PASSED += 1
+  if HOURS_PASSED > 12:
+      network.get_local_time()
+      HOURS_PASSED = 0
+
   HOUR = curr_time.tm_hour
   MIN  = curr_time.tm_min
   SEC  = curr_time.tm_sec
@@ -157,21 +168,17 @@ def drawClock(display):
   drawClockHourHand(g1)
 
 def connectNetwork():
+    global network
     #this creates a network object but does not actually connect
     network = Network(status_neopixel=board.NEOPIXEL, debug=False)
-    #connects on first usage
-    #Is there a cleaner way of doing this?
-    #like while network.netconnected():
     attempt = 0
-    while attempt < 3:
+    while not network._wifi.is_connected:
         try:
-            #This is a great function
-            network.get_local_time()
-            attempt = 3
+            network.connect()
         except ConnectionError as e:
             print("could not connect to AP, retrying: ", e)
-            attempt += 1
             continue
+    network.get_local_time()
 
 def main():
   global WIDTH
