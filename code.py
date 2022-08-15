@@ -59,20 +59,6 @@ except ImportError:
     print("WiFi secrets are kept in secrets.py, please add them there!")
     raise
 
-'''
-This was an early test to draw random circles around the screen.
-with a passed in color
-'''
-def randomizeCircles(output, color):
-    xp0 = random.randrange( 1, WIDTH-1 )
-    yp0 = random.randrange( 1, HEIGHT-1 )
-    xmin = min(xp0,WIDTH-1-xp0)
-    ymin = min(yp0,HEIGHT-1-yp0)
-    radius = max(min(xmin, ymin),1)
-    print( "X: %d Y: %d r: %d " % ( xp0, yp0, radius) )
-    circle = Circle( xp0, yp0, radius, fill=None, outline=color)
-    output.pop(0)
-    output.append(circle)
 
 '''
 Draw the big clock circle
